@@ -30,17 +30,19 @@ class BlurViewManager extends ViewGroupManager<BlurView> {
   @Override
   public @Nonnull BlurView createViewInstance(@Nonnull ThemedReactContext ctx) {
     BlurView blurView = new BlurView(ctx);
-    View decorView = Objects
-      .requireNonNull(ctx.getCurrentActivity())
-      .getWindow()
-      .getDecorView();
-    ViewGroup rootView = decorView.findViewById(android.R.id.content);
-    Drawable windowBackground = decorView.getBackground();
 
-    blurView
-      .setupWith(rootView, new RenderScriptBlur(ctx))
-      .setFrameClearDrawable(windowBackground)
-      .setBlurRadius(defaultRadius);
+    Activity currentActivity = ctx.getCurrentActivity();
+
+    if (currentActivity != null) {
+      View decorView = currentActivity.getWindow().getDecorView();
+      ViewGroup rootView = decorView.findViewById(android.R.id.content);
+      Drawable windowBackground = decorView.getBackground();
+
+      blurView
+        .setupWith(rootView, new RenderScriptBlur(ctx))
+        .setFrameClearDrawable(windowBackground)
+        .setBlurRadius(defaultRadius);
+    }
 
     return blurView;
   }
