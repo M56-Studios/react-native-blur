@@ -1,5 +1,6 @@
 package com.reactnativecommunity.blurview;
 
+import android.app.Activity;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.view.View;
